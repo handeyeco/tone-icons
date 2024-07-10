@@ -14,7 +14,7 @@ const sampler = new Tone.Sampler({
     E4: "E4.wav",
   },
   release: 1,
-  baseUrl: "/xylo/",
+  baseUrl: "/tone-icons/xylo/",
 }).toDestination();
 
 export default function playXylo(seq: Sequence) {
