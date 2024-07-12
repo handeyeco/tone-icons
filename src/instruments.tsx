@@ -1,5 +1,6 @@
 import * as Tone from "tone";
 
+const vol = new Tone.Volume(-6).toDestination();
 const xylo = new Tone.Sampler({
   urls: {
     C3: "C3.mp3",
@@ -20,7 +21,7 @@ const xylo = new Tone.Sampler({
   },
   release: 1,
   baseUrl: "/tone-icons/xylo-mp3/",
-}).toDestination();
+}).connect(vol);
 
 const rhodes = new Tone.Sampler({
   urls: {
@@ -42,7 +43,7 @@ const rhodes = new Tone.Sampler({
   },
   release: 1,
   baseUrl: "/tone-icons/rhodes-mp3/",
-}).toDestination();
+}).connect(vol);
 
 export default function playInstrument(
   seq: Sequence,
