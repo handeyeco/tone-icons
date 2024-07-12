@@ -1,49 +1,60 @@
+import { useState } from "react";
 import "./App.css";
-import playXylo from "./xylo";
-
-const progressSeq: Sequence = [
-  ["0:0:0", "C3"],
-  ["0:0:1", "E3"],
-  ["0:0:2", "G3"],
-  ["0:0:3", "D3"],
-  ["0:1:0", "F3"],
-  ["0:1:1", "A3"],
-  ["0:1:2", "E3"],
-  ["0:1:3", "G3"],
-  ["0:2:0", "B3"],
-  ["0:2:1", "C4"],
-];
-
-const sadSeq: Sequence = [
-  ["0:0:0", "C4"],
-  ["0:1:0", "C4"],
-  ["0:1:2", "C3"],
-];
-
-const victorySeq: Sequence = [
-  ["0:0:0", "C3"],
-  ["0:0:0", "E3"],
-  ["0:0:0", "G3"],
-
-  ["0:1:0", "F3"],
-  ["0:1:0", "A3"],
-  ["0:1:0", "E3"],
-
-  ["0:2:0", "G3"],
-  ["0:2:0", "B3"],
-  ["0:2:0", "D4"],
-
-  ["0:2:2", "G3"],
-  ["0:2:2", "B3"],
-  ["0:2:2", "D4"],
-];
+import playInstrument from "./instruments";
+import {
+  generateRandom7ths,
+  progressSeq,
+  sadSeq,
+  victorySeq,
+} from "./sequences";
 
 function App() {
+  const [instruments, setInstruments] = useState<Array<Instrument>>(["xylo"]);
+
+  function toggleInstrument(inst: Instrument) {
+    if (instruments.includes(inst)) {
+      setInstruments(instruments.filter((i) => i !== inst));
+    } else {
+      setInstruments([...instruments, inst]);
+    }
+  }
+
   return (
     <>
-      <button onClick={() => playXylo(progressSeq)}>Play Progress</button>
-      <button onClick={() => playXylo(sadSeq)}>Play Sad</button>
-      <button onClick={() => playXylo(victorySeq)}>Play Victory</button>
+      <div>
+        <button onClick={() => playInstrument(progressSeq, instruments)}>
+          Play Progress
+        </button>
+        <button onClick={() => playInstrument(sadSeq, instruments)}>
+          Play Sad
+        </button>
+        <button onClick={() => playInstrument(victorySeq, instruments)}>
+          Play Victory
+        </button>
+        <button
+          onClick={() => playInstrument(generateRandom7ths(), instruments)}
+        >
+          Play Random 7ths
+        </button>
+      </div>
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            checked={instruments.includes("xylo")}
+            onChange={() => toggleInstrument("xylo")}
+          />
+          Xylophone
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={instruments.includes("rhodes")}
+            onChange={() => toggleInstrument("rhodes")}
+          />
+          Rhodes
+        </label>
+      </div>
     </>
   );
 }
